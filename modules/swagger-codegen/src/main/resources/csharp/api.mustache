@@ -17,14 +17,14 @@ namespace {{package}} {
     /// </summary>
     {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>{{/allParams}}
     /// <returns>{{#returnType}}{{{returnType}}}{{/returnType}}</returns>
-    {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#returnType}}IRestResponse<{{{returnType}}}>{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
     /// <summary>
     /// {{summary}} {{notes}}
     /// </summary>
     {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>{{/allParams}}
     /// <returns>{{#returnType}}{{{returnType}}}{{/returnType}}</returns>
-    {{#returnType}}Task<{{{returnType}}}>{{/returnType}}{{^returnType}}Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+    {{#returnType}}Task<IRestResponse<{{{returnType}}}>>{{/returnType}}{{^returnType}}Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
     {{/operation}}
   }
 
@@ -84,7 +84,7 @@ namespace {{package}} {
     /// </summary>
     {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>{{/allParams}}
     /// <returns>{{#returnType}}{{{returnType}}}{{/returnType}}</returns>
-    public {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+    public {{#returnType}}IRestResponse<{{{returnType}}}>{{/returnType}}{{^returnType}}void{{/returnType}} {{nickname}} ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
 
       {{#allParams}}{{#required}}
       // verify the required parameter '{{paramName}}' is set
@@ -115,21 +115,23 @@ namespace {{package}} {
       String[] authSettings = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
 
       // make the HTTP request
-      IRestResponse response = (IRestResponse) apiClient.CallApi(path, Method.{{httpMethod}}, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+      var response = apiClient.CallApi<{{{returnType}}}>(path, Method.{{httpMethod}}, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
 
       if (((int)response.StatusCode) >= 400) {
         throw new ApiException ((int)response.StatusCode, "Error calling {{nickname}}: " + response.Content, response.Content);
       }
-      {{#returnType}}return ({{{returnType}}}) apiClient.Deserialize(response.Content, typeof({{{returnType}}}));{{/returnType}}{{^returnType}}
+
+      {{#returnType}}response.Data = ({{{returnType}}}) apiClient.Deserialize(response.Content, typeof({{{returnType}}}));{{/returnType}}
+      {{#returnType}}return response;{{/returnType}}{{^returnType}}
       return;{{/returnType}}
     }
 	
-	 /// <summary>
+	  /// <summary>
     /// {{summary}} {{notes}}
     /// </summary>
     {{#allParams}}/// <param name="{{paramName}}">{{description}}</param>{{/allParams}}
     /// <returns>{{#returnType}}{{{returnType}}}{{/returnType}}</returns>
-    public async {{#returnType}}Task<{{{returnType}}}>{{/returnType}}{{^returnType}}Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+    public async {{#returnType}}Task<IRestResponse<{{{returnType}}}>>{{/returnType}}{{^returnType}}Task{{/returnType}} {{nickname}}Async ({{#allParams}}{{{dataType}}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
 
       {{#allParams}}{{#required}}
           // verify the required parameter '{{paramName}}' is set
@@ -160,11 +162,13 @@ namespace {{package}} {
       String[] authSettings = new String[] { {{#authMethods}}"{{name}}"{{#hasMore}}, {{/hasMore}}{{/authMethods}} };
 
       // make the HTTP request
-      IRestResponse response = (IRestResponse) await apiClient.CallApiAsync(path, Method.{{httpMethod}}, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
+      var response = await apiClient.CallApiAsync<{{{returnType}}}>(path, Method.{{httpMethod}}, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
       if (((int)response.StatusCode) >= 400) {
         throw new ApiException ((int)response.StatusCode, "Error calling {{nickname}}: " + response.Content, response.Content);
       }
-      {{#returnType}}return ({{{returnType}}}) apiClient.Deserialize(response.Content, typeof({{{returnType}}}));{{/returnType}}{{^returnType}}
+
+      {{#returnType}}response.Data = ({{{returnType}}}) apiClient.Deserialize(response.Content, typeof({{{returnType}}}));{{/returnType}}
+      {{#returnType}}return response;{{/returnType}}{{^returnType}}
       return;{{/returnType}}
     }
     {{/operation}}

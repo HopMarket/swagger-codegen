@@ -26,8 +26,8 @@ public class CSharpClientCodegen extends DefaultCodegen implements CodegenConfig
         modelTemplateFiles.put("model.mustache", ".cs");
         apiTemplateFiles.put("api.mustache", ".cs");
         templateDir = "csharp";
-        apiPackage = "IO.Swagger.Api";
-        modelPackage = "IO.Swagger.Model";
+        apiPackage = "ODE.SDK.Api";
+        modelPackage = "ODE.SDK.Model";
 
         reservedWords = new HashSet<String>(
                 Arrays.asList(
