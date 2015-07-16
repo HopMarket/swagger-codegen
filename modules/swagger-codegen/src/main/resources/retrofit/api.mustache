@@ -2,6 +2,7 @@ package {{package}};
 
 import {{modelPackage}}.*;
 
+import retrofit.Callback;
 import retrofit.http.*;
 import retrofit.mime.*;
 import java.util.*;
@@ -20,9 +21,10 @@ public interface {{classname}} {
    */
   {{#formParams}}{{#-first}}
   {{#isMultipart}}@Multipart{{/isMultipart}}{{^isMultipart}}@FormUrlEncoded{{/isMultipart}}{{/-first}}{{/formParams}}
-  @{{httpMethod}}("{{path}}")  
-  {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}} {{nickname}}({{^allParams}});{{/allParams}}
-    {{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}},{{/hasMore}}{{^hasMore}}
+  @{{httpMethod}}("{{path}}")
+  void {{nickname}}({{^allParams}}Callback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}> callback);{{/allParams}}
+  {{#allParams}}{{>queryParams}}{{>pathParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{#hasMore}}, {{/hasMore}}{{^hasMore}},
+      Callback<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}> callback
   );{{/hasMore}}{{/allParams}}  
   {{/operation}}
 }
