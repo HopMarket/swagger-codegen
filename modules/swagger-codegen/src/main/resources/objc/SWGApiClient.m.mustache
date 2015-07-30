@@ -502,7 +502,7 @@ static bool loggingEnabled = true;
                  // Add in the (parsed) response body.
                  userInfo[SWGResponseObjectErrorKey] = operation.responseObject;
              }
-             NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
+             NSError *augmentedError = [error initWithDomain:error.domain code:operation.response.statusCode userInfo:userInfo];
 
              if(self.logServerResponses)
                  [self logResponse:nil forRequest:request error:augmentedError];
@@ -662,7 +662,7 @@ static bool loggingEnabled = true;
                  // Add in the (parsed) response body.
                  userInfo[SWGResponseObjectErrorKey] = operation.responseObject;
              }
-             NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
+             NSError *augmentedError = [error initWithDomain:error.domain code:operation.response.statusCode userInfo:userInfo];
 
              if(self.logServerResponses)
                  [self logResponse:nil forRequest:request error:augmentedError];
