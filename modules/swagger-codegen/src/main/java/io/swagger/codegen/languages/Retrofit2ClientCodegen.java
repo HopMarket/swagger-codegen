@@ -69,11 +69,11 @@ public class RetrofitClientCodegen extends DefaultCodegen implements CodegenConf
     }
 
     public String getName() {
-        return "retrofit";
+        return "retrofit2";
     }
 
     public String getHelp() {
-        return "Generates a Retrofit client library.";
+        return "Generates a Retrofit 2 client library.";
     }
 
     @Override
