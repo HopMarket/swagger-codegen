@@ -15,14 +15,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-public class RetrofitClientCodegen extends DefaultCodegen implements CodegenConfig {
+public class Retrofit2ClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String invokerPackage = "io.swagger.client";
     protected String groupId = "io.swagger";
     protected String artifactId = "swagger-java-client";
     protected String artifactVersion = "1.0.0";
     protected String sourceFolder = "src/main/java";
 
-    public RetrofitClientCodegen() {
+    public Retrofit2ClientCodegen() {
         super();
         outputFolder = "generated-code/java";
         modelTemplateFiles.put("model.mustache", ".java");
