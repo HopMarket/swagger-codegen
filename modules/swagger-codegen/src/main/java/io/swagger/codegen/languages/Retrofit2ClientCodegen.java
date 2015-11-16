@@ -197,4 +197,18 @@ public class Retrofit2ClientCodegen extends DefaultCodegen implements CodegenCon
         }
         return objs;
     }
+
+    @Override
+    public String toDefaultValue(Property p) {
+        if (p instanceof MapProperty) {
+            MapProperty ap = (MapProperty) p;
+            String inner = getSwaggerType(ap.getAdditionalProperties());
+            return "new HashMap<String, " + inner + ">() ";
+        } else if (p instanceof ArrayProperty) {
+            ArrayProperty ap = (ArrayProperty) p;
+            String inner = getSwaggerType(ap.getItems());
+            return "new ArrayList<" + inner + ">() ";
+        }
+        return super.toDefaultValue(p);
+    }
 }
