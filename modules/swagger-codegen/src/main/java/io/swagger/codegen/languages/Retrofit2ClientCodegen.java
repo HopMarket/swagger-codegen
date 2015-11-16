@@ -191,7 +191,7 @@ public class Retrofit2ClientCodegen extends DefaultCodegen implements CodegenCon
                     }
                 }
                 if (operation.returnType == null) {
-                    operation.returnType = "Object";
+                    operation.returnType = "Void";
                 }
             }
         }
