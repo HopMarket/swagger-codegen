@@ -423,7 +423,7 @@ static void (^reachabilityChangeBlock)(int);
                                                                            // Add in the (parsed) response body.
                                                                            userInfo[{{classPrefix}}ResponseObjectErrorKey] = operation.responseObject;
                                                                        }
-                                                                       NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
+                                                                       NSError *augmentedError = [error initWithDomain:error.domain code:operation.response.statusCode userInfo:userInfo];
                                                                         [self logResponse:nil forRequest:request error:augmentedError];
 
                                                                        NSDictionary *responseHeaders = [[operation response] allHeaderFields];
@@ -482,7 +482,7 @@ static void (^reachabilityChangeBlock)(int);
                                                                            userInfo[{{classPrefix}}ResponseObjectErrorKey] = operation.responseObject;
                                                                        }
 
-                                                                       NSError *augmentedError = [error initWithDomain:error.domain code:error.code userInfo:userInfo];
+                                                                       NSError *augmentedError = [error initWithDomain:error.domain code:operation.response.statusCodeuserInfo:userInfo];
 
 
                                                                         [self logResponse:nil forRequest:request error:augmentedError];
