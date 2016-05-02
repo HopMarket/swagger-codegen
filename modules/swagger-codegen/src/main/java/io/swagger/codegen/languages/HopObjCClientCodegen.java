@@ -76,9 +76,9 @@ public class HopObjCClientCodegen extends DefaultCodegen implements CodegenConfi
 
         typeMapping = new HashMap<String, String>();
         typeMapping.put("enum", "NSString");
-        typeMapping.put("Date", "NSDate");
-        typeMapping.put("DateTime", "NSDate");
-        typeMapping.put("boolean", "BOOL");
+        typeMapping.put("Date", "NSString");
+        typeMapping.put("DateTime", "NSString");
+        typeMapping.put("boolean", "NSNumber");
         typeMapping.put("string", "NSString");
         typeMapping.put("integer", "NSNumber");
         typeMapping.put("int", "NSNumber");
