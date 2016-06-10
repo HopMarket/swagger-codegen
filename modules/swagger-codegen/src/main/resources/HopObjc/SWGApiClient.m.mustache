@@ -299,6 +299,10 @@ static bool loggingEnabled = true;
                         [requestUrl appendString:[NSString stringWithFormat:@"%@%@=%@", separator,
                             [SWGApiClient escape:key], [NSString stringWithFormat:@"%@", obj]]];
                         counter += 1;
+
+                        // Need to make sure the seperator is updated incase a multi format param is first.
+                        // All items in the array will be seperated by a '?' instead of '&'.'
+                        separator = @"&";
                     }
 
                 }
