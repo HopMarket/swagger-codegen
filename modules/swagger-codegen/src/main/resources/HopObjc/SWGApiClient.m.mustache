@@ -406,7 +406,14 @@ static bool loggingEnabled = true;
                 }
             }
         }
+
         NSString * urlString = [[NSURL URLWithString:path relativeToURL:self.baseURL] absoluteString];
+
+        // Nate - I added this here to handle query params when there is a multipar form post
+        if (queryParams) {
+            NSString * pathWithQueryParams = [self pathWithQueryParamsToString:path queryParams:queryParams];
+            urlString = [[NSURL URLWithString:pathWithQueryParams relativeToURL:self.baseURL] absoluteString];
+        }
 
         // request with multipart form
         if([requestContentType isEqualToString:@"multipart/form-data"]) {
